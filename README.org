@@ -10,11 +10,8 @@
 
 * Run script
 #+BEGIN_SRC bash
-cd ~/
-git clone https://github.com/Artawower/cli-linux-setup.git
-cd cli-linux-setup
+curl -O https://raw.githubusercontent.com/Artawower/cli-linux-setup/master/setup.sh
 chmod +x setup.sh
-./setup.sh
 #+END_SRC
 
 * Update all necessary dependencies
@@ -38,6 +35,10 @@ read -rp "Enter generated publick ssh key for ${USERNAME}: " SSH_KEY
 echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
 #+END_SRC
 
+* Git
+#+BEGIN_SRC bash :tangle setup.sh
+sudo apt install git
+#+END_SRC
 * Install docker and docker compose
 #+BEGIN_SRC bash :tangle setup.sh
 sudo apt-get install docker.io

@@ -9,8 +9,10 @@ passwd $USERNAME
 mkdir /home/$USERNAME
 chown $USERNAME:$username /home/$username
 mkdir /home/$USERNAME/.ssh
-read -rp "Enter generated publick ssh key for ${USERNAME}" SSH_KEY
+read -rp "Enter generated publick ssh key for ${USERNAME}: " SSH_KEY
 echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+
+sudo apt install git
 
 sudo apt-get install docker.io
 sudo apt-get install docker-compose
@@ -18,3 +20,8 @@ sudo apt-get install docker-compose
 sudo apt-get install neovim
 
 sudo apt-get install fish
+chsh -s /usr/bin/fish
+
+sudo apt install ncdu
+
+sudo apt install ranger
