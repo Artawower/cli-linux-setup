@@ -24,15 +24,20 @@ sudo apt-get upgrade
 ** Create user
 #+BEGIN_SRC bash :tangle setup.sh
 read -rp "Enter the USERNAME of the new user account: " USERNAME
-sudo adduser $USERNAME
-sudo usermod -a -G sudo $USERNAME
-echo "Password"
-passwd $USERNAME
-mkdir /home/$USERNAME
-chown $USERNAME:$username /home/$USERNAME
-mkdir /home/$USERNAME/.ssh
-read -rp "Enter generated publick ssh key for ${USERNAME}: " SSH_KEY
-echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+
+if id "$USERNAME" >/dev/null 2>&1; then
+    echo "User $USERNAME already exists."
+else
+    sudo adduser $USERNAME
+    sudo usermod -a -G sudo $USERNAME
+    echo "Password"
+    passwd $USERNAME
+    mkdir /home/$USERNAME
+    chown $USERNAME:$username /home/$USERNAME
+    mkdir /home/$USERNAME/.ssh
+    read -rp "Enter generated publick ssh key for ${USERNAME}: " SSH_KEY
+    echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+fi
 #+END_SRC
 
 * Git
@@ -45,7 +50,6 @@ sudo apt-get install docker.io
 sudo apt-get install docker-compose
 sudo groupadd docker
 sudo usermod -aG docker $USERNAME
-newgrp docker
 #+END_SRC
 * Install neovim
 [[https://github.com/neovim/neovim/wiki/Installing-Neovim][Reference]]
@@ -67,5 +71,12 @@ sudo apt install ncdu
 ** Better file manager
 #+BEGIN_SRC bash :tangle setup.sh
 sudo apt install ranger
+#+END_SRC
+
+
+
+* Logging
+#+BEGIN_SRC bash :tangle setup.sh
+echo "The setup was successfully finished!"
 #+END_SRC
 
