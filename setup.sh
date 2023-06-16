@@ -11,10 +11,12 @@ else
     echo "Password"
     passwd $USERNAME
     mkdir /home/$USERNAME
-    chown $USERNAME:$username /home/$USERNAME
     mkdir /home/$USERNAME/.ssh
+    chown -R $USERNAME:$USERNAME /home/$USERNAME
     read -rp "Enter generated publick ssh key for ${USERNAME}: " SSH_KEY
     echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+    usermod -aG sudo $USERNAME
+    sudo su $USERNAME -c 'cd ~/.ssh/ && ssh-keygen' 
 fi
 
 sudo apt install git
@@ -24,13 +26,13 @@ sudo apt-get install docker-compose
 sudo groupadd docker
 sudo usermod -aG docker $USERNAME
 
-sudo apt-get install neovim
+sudo su $USERNAME -c 'sudo apt-get install neovim'
 
-sudo apt-get install fish
-chsh -s /usr/bin/fish
+sudo su $USERNAME -c 'sudo apt-get install fish'
+sudo su $USERNAME -c 'chsh -s /usr/bin/fish'
 
-sudo apt install ncdu
+sudo su $USERNAME -c 'sudo apt install ncdu'
 
-sudo apt install ranger
+sudo su $USERNAME -c 'sudo apt install ranger'
 
 echo "The setup was successfully finished!"
